@@ -1,5 +1,6 @@
 /* 
     TIMESWEEPER, a run through time
+    7/2019
 
     Created and idealized by:
         - Daniel Dias Gonçalves
