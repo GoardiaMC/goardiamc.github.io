@@ -13,7 +13,7 @@
 var nCols = 12;
 var nRows = 13;
 var pieceSize = 50;
-var tickMs = 70; // 100ms per tick
+var tickMs = 90; // 100ms per tick
 var bombsClicked = 0;
 var bombsToLoose = 1;
 var bombsSurpassed = 0;
@@ -93,7 +93,7 @@ canvas.addEventListener('click', function (evt) {
         return;
     }
         
-    if (piece && !piece.clicked) {
+    if (piece && !piece.clicked && !piece.flagged) {
 
         piece.clicked = true;
         addToScore(piece);
