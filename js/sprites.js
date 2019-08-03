@@ -16,7 +16,7 @@ function newImgOnload(src){
 
 img = {
     '1' : newImg('resources/1.png'),
-    '2' : newImg('resources/3.png'),
+    '2' : newImg('resources/2.png'),
     '3' : newImg('resources/3.png'),
     '4' : newImg('resources/4.png'),
     '5' : newImg('resources/5.png'),
