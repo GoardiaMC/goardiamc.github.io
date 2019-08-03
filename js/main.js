@@ -35,7 +35,7 @@ var canvas = (() => {
         pieceSize = Math.floor(screen.width / nCols);
 
     screen.heightOffset = screen.height - Math.floor(screen.height * 0.8 / nRows) * nRows
-    console.log(screen.heightOffset);
+
     canvas.height = screen.height;
     canvas.width = screen.width;
 
@@ -55,7 +55,6 @@ canvas.addEventListener('click', function (evt) {
     var coords = getCursorPosition(canvas, evt);
     var piece = getPieceByPosition(coords.x, coords.y);
 
-    console.log(piece);
     if (gameLost()) {
         return;
     }
@@ -98,7 +97,7 @@ canvas.addEventListener('contextmenu', function (evt) {
 
     var coords = getCursorPosition(canvas, evt);
     var piece = getPieceByPosition(coords.x, coords.y);
-    //console.log([piece, "rightClick"]);
+
     if (piece && !piece.clicked)
         piece.flagged = !piece.flagged;
 
@@ -168,6 +167,10 @@ function getPieceByPosition(x, y) {
     var xCorner = Math.floor(x / pieceSize);
     var piece;
 
+    if (y < screen.heightOffset) {
+        return null;
+    }
+
     grid.forEach(line => {
         if (y >= line[0].y + screen.heightOffset && y < line[0].y + pieceSize + screen.heightOffset)
             piece = line[xCorner];
@@ -230,7 +233,6 @@ function randChoice(choiceList) {
     return choiceList[randInt(choiceList.length)];
 }
 function newUndefinedPiece(i, isFirstLine) {
-    //console.log(i * pieceSize,(isFirstLine ? -1 : -2) * pieceSize);
     return {
         x: i * pieceSize,
         y: (isFirstLine ? -1 : -2) * pieceSize,
@@ -407,7 +409,7 @@ function drawHeader() {
     ctx.fillRect(0, 0, pieceSize * nCols, screen.heightOffset);
 
     var emoji_corner = Math.floor(screen.heightOffset / 2);
-    ctx.drawImage(img.emoji, Math.floor(pieceSize * nCols / 2) - emoji_corner/2, emoji_corner/2, emoji_corner, emoji_corner);
+    ctx.drawImage(img.emoji, Math.floor(pieceSize * nCols / 2) - emoji_corner / 2, emoji_corner / 2, emoji_corner, emoji_corner);
 }
 
 function draw() {
