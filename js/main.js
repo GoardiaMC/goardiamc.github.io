@@ -10,7 +10,7 @@
 */
 
 
-var nCols = 12;
+var nCols = 10;
 var nRows = 14;
 var pieceSize = 50;
 var tickMs = 90; // 100ms per tick
