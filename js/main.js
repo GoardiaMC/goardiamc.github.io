@@ -390,7 +390,7 @@ function generateLine() {
                 if (adj1 && adj1.type == 'bomb' || adj2 && adj2.type == 'bomb') {
                     generateNumberPiece(x, 1);
                 }
-                else if (randInt(100) < 25 && generateNumberPiece(x, 1) != 0) {
+                else if (randInt(100) < 50 && generateNumberPiece(x, 1) != 0) {
                     //Try to generate number here
                 }
                 else {
