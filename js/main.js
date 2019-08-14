@@ -9,11 +9,10 @@
       - 
 */
 
-
 var nCols = 10;
 var nRows = 14;
 var pieceSize = 50;
-var tickMs = 60; // 100ms per tick
+var tickMs = 75; // 100ms per tick
 var bombsClicked = 0;
 var bombsToLoose = 1;
 var bombsSurpassed = 0;
@@ -44,16 +43,35 @@ var canvas = (() => {
     return canvas;
 })()
 
-var grid = [[]];
-range(nCols).forEach(index => grid[0].push(newUndefinedPiece(index, true)))
+function restartGame() {
+    grid = [[]];
+    range(nCols).forEach(index => grid[0].push(newUndefinedPiece(index, true)))
+    
+    bombsClicked = 0;
+    bombsSurpassed = 0;
+    score = 0;
+}
+restartGame();
 
 var ctx = canvas.getContext('2d');
 
 /* END Image Resources */
 
+function emojiClicked({ 'x': x, 'y': y }) {
+    return Math.sqrt((x - emoji_Xcenter) * (x - emoji_Xcenter) + (y - emoji_Ycenter) * (y - emoji_Ycenter)) < emoji_length / 2;
+}
+
 canvas.addEventListener('click', function (evt) {
     var coords = getCursorPosition(canvas, evt);
     var piece = getPieceByPosition(coords.x, coords.y);
+
+    if (emojiClicked(coords)) {
+        // refresh the game
+        ctx.clearRect(0, screen.heightOffset, pieceSize * nCols, screen.height);
+        clearInterval(interval);
+        restartGame();
+        interval = setInterval(draw, tickMs)
+    }
 
     if (gameLost()) {
         return;
@@ -390,7 +408,7 @@ function generateLine() {
                 if (adj1 && adj1.type == 'bomb' || adj2 && adj2.type == 'bomb') {
                     generateNumberPiece(x, 1);
                 }
-                else if (randInt(100) < 50 && generateNumberPiece(x, 1) != 0) {
+                else if (randInt(100) < 25 && generateNumberPiece(x, 1) != 0) {
                     //Try to generate number here
                 }
                 else {
@@ -408,8 +426,10 @@ function drawHeader() {
     ctx.fillStyle = 'rgb(179, 255, 255)';
     ctx.fillRect(0, 0, pieceSize * nCols, screen.heightOffset);
 
-    var emoji_corner = Math.floor(screen.heightOffset / 2);
-    ctx.drawImage(img.emoji, Math.floor(pieceSize * nCols / 2) - emoji_corner / 2, emoji_corner / 2, emoji_corner, emoji_corner);
+    emoji_length = Math.floor(screen.heightOffset / 2);
+    emoji_Xcenter = Math.floor(pieceSize * nCols / 2);
+    emoji_Ycenter = emoji_length;
+    ctx.drawImage(img.emoji, Math.floor(pieceSize * nCols / 2) - emoji_length / 2, emoji_length / 2, emoji_length, emoji_length);
 }
 
 function draw() {
