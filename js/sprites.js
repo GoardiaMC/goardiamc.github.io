@@ -1,3 +1,5 @@
+var interval;
+
 /* Image Resources */
 function newImg(src){
     var image = new Image();
@@ -8,7 +10,9 @@ function newImg(src){
 
 function newImgOnload(src){
     var image = new Image();
-    image.onload = () => setInterval(draw, tickMs);
+    image.onload = () => {
+        interval = setInterval(draw, tickMs)
+    };
     image.src = src;
 
     return image;
