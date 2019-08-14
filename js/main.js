@@ -12,7 +12,7 @@
 var nCols = 10;
 var nRows = 14;
 var pieceSize = 50;
-var tickMs = 75; // 100ms per tick
+var tickMs = 120; // 100ms per tick
 var bombsClicked = 0;
 var bombsToLoose = 1;
 var bombsSurpassed = 0;
